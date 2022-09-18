@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Edit page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link th:href="@{/style/edit.css}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h5>for managers</h5>
+        <h3> Add Product</h3>
+    </div>
+
+    <table class="table table-bordered table-striped" style="width: 100%">
+        <tbody>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" name="name" placeholder="Product name" id="name" style="width: 512px"> </input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Price</td>
+            <td>
+                <input type="text" name="price" placeholder="Product price" id="price" style="width: 512px"> </input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Image</td>
+            <td>
+                <input type="file" name="image" placeholder="Product image" id="image" style="width: 512px"> </input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Details</td>
+            <td>
+                <input type="text" name="details" placeholder="Product name" id="details" style="width: 512px"> </input>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button onclick="edits()"> Submit </button>
+</div>
+</body>
+
+<script>
+    function edits() {
+        let name = document.getElementById("name").value;
+        let price = document.getElementById("price").value;
+        let image = document.getElementById("image").value;
+        let description = document.getElementById("describe").value;
+        let file = "-img-";
+
+        for(let i = 0; i < image.length; i++) {
+            if(i > 11) {
+                file += image.charAt(i);
+            }
+        }
+
+        window.location.replace("http://localhost:8080/main/blog/add/name/" + name + "/author/" + price
+            + "/image/" + file + "/text/" + description);
+    }
+</script>
+</html>
