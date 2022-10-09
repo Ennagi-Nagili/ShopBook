@@ -16,6 +16,7 @@
     <h5>for managers</h5>
     <h3> Add Product</h3>
     <h5 th:text="${type}" style="visibility: hidden" id="type"></h5>
+    <h5 id="ima" style="visibility: hidden"></h5>
   </div>
 
 <table class="table table-bordered table-striped" style="width: 100%">
@@ -55,33 +56,39 @@
 
 <script>
   function edits() {
-    let name = document.getElementById("name").value;
-    let price = document.getElementById("price").value;
-    let image = document.getElementById("image").value;
-    let description = document.getElementById("details").value;
-    let type = document.getElementById("type").textContent;
+    const file = document.getElementById("image").files[0];
+    const reader = new FileReader();
 
-    let file = "-img-";
+    reader.addEventListener("load", () => {
+      let edited = reader.result;
+      edited = edited.replaceAll('/', '-');
+      edited = edited.replaceAll(';', '!');
+      //document.getElementById("ima").innerHTML = edited;
 
-    for(let i = 0; i < image.length; i++) {
-      if(i > 11) {
-        file += image.charAt(i);
+      let name = document.getElementById("name").value;
+      let price = document.getElementById("price").value;
+      let description = document.getElementById("details").value;
+      let type = document.getElementById("type").textContent;
+      //let image = document.getElementById("ima").textContent;
+
+      if (type == "main") {
+        window.location.replace("http://localhost:8080/main/admin/add/name/" + name + "/price/" + price
+                + "/image/" + edited + "/details/" + description);
       }
-    }
 
-    if (type == "main") {
-      window.location.replace("http://localhost:8080/main/admin/add/name/" + name + "/price/" + price
-              + "/image/" + file + "/details/" + description);
-    }
+      else if (type == "best") {
+        window.location.replace("http://localhost:8080/main/best/add/name/" + name + "/price/" + price
+                + "/image/" + edited + "/details/" + description);
+      }
 
-    else if (type == "best") {
-      window.location.replace("http://localhost:8080/main/best/add/name/" + name + "/price/" + price
-              + "/image/" + file + "/details/" + description);
-    }
+      else if (type == "new") {
+        window.location.replace("http://localhost:8080/main/new/add/name/" + name + "/price/" + price
+                + "/image/" + edited + "/details/" + description);
+      }
+    }, false);
 
-    else if (type == "new") {
-      window.location.replace("http://localhost:8080/main/new/add/name/" + name + "/price/" + price
-              + "/image/" + file + "/details/" + description);
+    if(file) {
+      reader.readAsDataURL(file);
     }
   }
 </script>

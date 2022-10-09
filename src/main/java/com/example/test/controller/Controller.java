@@ -6,6 +6,7 @@ import com.example.test.service.BookService;
 import com.example.test.service.CartService;
 import com.example.test.service.FavoriteService;
 import com.example.test.service.OtherService;
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64Encoder;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -226,7 +227,12 @@ public class Controller {
         Product bookEntity = new Product();
         bookEntity.setName(name);
         bookEntity.setPrice(price);
-        bookEntity.setImage(image.replace('-', '/'));
+
+        String edited = image.replace('-', '/');
+        edited = edited.replace('!', ';');
+        bookEntity.setImage(edited);
+
+
         bookEntity.setDetails(details);
         bookService.book(bookEntity);
 
